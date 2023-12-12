@@ -15,6 +15,10 @@
  */
 package org.mybatis.generator.codegen;
 
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMapperMethodGenerator;
+
 /**
  * This class exists to that Java client generators can specify whether
  * an XML generator is required to match the methods in the
@@ -49,4 +53,23 @@ public abstract class AbstractJavaClientGenerator extends AbstractJavaGenerator 
      *     XML is required by this generator
      */
     public abstract AbstractXmlGenerator getMatchedXMLGenerator();
+
+
+    protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator,
+                                                 Interface interfaze) {
+        methodGenerator.setContext(context);
+        methodGenerator.setIntrospectedTable(introspectedTable);
+        methodGenerator.setProgressCallback(progressCallback);
+        methodGenerator.setWarnings(warnings);
+        methodGenerator.addInterfaceElements(interfaze);
+    }
+
+    protected void initializeAndExecuteGenerator(AbstractJavaMethodGenerator methodGenerator,
+                                                 TopLevelClass classObj) {
+        methodGenerator.setContext(context);
+        methodGenerator.setIntrospectedTable(introspectedTable);
+        methodGenerator.setProgressCallback(progressCallback);
+        methodGenerator.setWarnings(warnings);
+        methodGenerator.addClassElements(classObj);
+    }
 }

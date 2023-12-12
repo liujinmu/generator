@@ -304,6 +304,31 @@ public class FullyQualifiedTable {
         return sb.toString();
     }
 
+
+    public String getSubPackageForManager(boolean isSubPackagesEnabled) {
+        StringBuilder sb = new StringBuilder();
+        if (!ignoreQualifiersAtRuntime && isSubPackagesEnabled) {
+            if (stringHasValue(runtimeCatalog)) {
+                sb.append('.');
+                sb.append(runtimeCatalog.toLowerCase());
+            } else if (stringHasValue(introspectedCatalog)) {
+                sb.append('.');
+                sb.append(introspectedCatalog.toLowerCase());
+            }
+
+            if (stringHasValue(runtimeSchema)) {
+                sb.append('.');
+                sb.append(runtimeSchema.toLowerCase());
+            } else if (stringHasValue(introspectedSchema)) {
+                sb.append('.');
+                sb.append(introspectedSchema.toLowerCase());
+            }
+        }
+
+        // TODO - strip characters that are not valid in package names
+        return sb.toString();
+    }
+
     private void addDelimiters(StringBuilder sb) {
         if (stringHasValue(beginningDelimiter)) {
             sb.insert(0, beginningDelimiter);

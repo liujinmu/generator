@@ -123,15 +123,6 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
         }
     }
 
-    protected void initializeAndExecuteGenerator(AbstractJavaMapperMethodGenerator methodGenerator,
-            Interface interfaze) {
-        methodGenerator.setContext(context);
-        methodGenerator.setIntrospectedTable(introspectedTable);
-        methodGenerator.setProgressCallback(progressCallback);
-        methodGenerator.setWarnings(warnings);
-        methodGenerator.addInterfaceElements(interfaze);
-    }
-
     public List<CompilationUnit> getExtraCompilationUnits() {
         return Collections.emptyList();
     }

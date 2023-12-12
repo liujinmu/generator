@@ -312,8 +312,12 @@ public class MyBatisGenerator {
             File directory = shellCallback.getDirectory(gjf
                     .getTargetProject(), gjf.getTargetPackage());
             targetFile = new File(directory, gjf.getFileName());
+            boolean writeFile = true;
             if (targetFile.exists()) {
-                if (shellCallback.isMergeSupported()) {
+                if (!gjf.enableOverwrite) {
+                    source = "";
+                    writeFile = false;
+                } else if (shellCallback.isMergeSupported()) {
                     source = shellCallback.mergeJavaFile(gjf
                             .getFormattedContent(), targetFile,
                             MergeConstants.getOldElementTags(),
@@ -336,7 +340,9 @@ public class MyBatisGenerator {
             callback.checkCancel();
             callback.startTask(getString(
                     "Progress.15", targetFile.getName())); //$NON-NLS-1$
-            writeFile(targetFile, source, gjf.getFileEncoding());
+            if (writeFile) {
+                writeFile(targetFile, source, gjf.getFileEncoding());
+            }
         } catch (ShellException e) {
             warnings.add(e.getMessage());
         }

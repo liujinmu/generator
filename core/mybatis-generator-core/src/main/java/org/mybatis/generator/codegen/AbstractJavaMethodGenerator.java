@@ -13,18 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.plugins;
+package org.mybatis.generator.codegen;
 
-import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 
-public class RenameExampleClassPlugin extends RenameAbstractPlugin {
-    @Override
-    protected String getOldName(IntrospectedTable introspectedTable) {
-        return introspectedTable.getExampleType();
-    }
+public abstract class AbstractJavaMethodGenerator extends AbstractGenerator {
 
-    @Override
-    protected void setNewName(IntrospectedTable introspectedTable, String name) {
-        introspectedTable.setExampleType(name);
-    }
+    public abstract void addClassElements(TopLevelClass javaType);
+
 }

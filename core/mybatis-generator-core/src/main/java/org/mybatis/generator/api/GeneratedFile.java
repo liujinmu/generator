@@ -21,6 +21,7 @@ package org.mybatis.generator.api;
  * @author Jeff Butler
  */
 public abstract class GeneratedFile {
+    protected boolean enableOverwrite = true;
 
     protected final String targetProject;
 
@@ -82,4 +83,12 @@ public abstract class GeneratedFile {
     public abstract boolean isMergeable();
 
     public abstract String getFileEncoding();
+
+    public boolean isEnableOverwrite() {
+        return enableOverwrite;
+    }
+
+    public void setEnableOverwrite(boolean enableOverwrite) {
+        this.enableOverwrite = enableOverwrite;
+    }
 }

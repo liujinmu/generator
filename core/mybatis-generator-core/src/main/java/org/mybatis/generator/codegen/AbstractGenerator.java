@@ -22,6 +22,7 @@ import org.mybatis.generator.api.ProgressCallback;
 import org.mybatis.generator.config.Context;
 
 public abstract class AbstractGenerator {
+    protected boolean enableOverwrite = true;
     protected Context context;
     protected IntrospectedTable introspectedTable;
     protected List<String> warnings;
@@ -45,5 +46,13 @@ public abstract class AbstractGenerator {
 
     public void setProgressCallback(ProgressCallback progressCallback) {
         this.progressCallback = progressCallback;
+    }
+
+    public boolean isEnableOverwrite() {
+        return enableOverwrite;
+    }
+
+    public void setEnableOverwrite(boolean enableOverwrite) {
+        this.enableOverwrite = enableOverwrite;
     }
 }

@@ -21,7 +21,9 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
 import java.util.List;
 
 public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
+    private final static String BASE_MAPPER_PACKAGE_SUFFIX = ".base";
     private String targetPackage;
+    private String targetSubMapperPackage;
     private String targetProject;
 
     public JavaClientGeneratorConfiguration() {
@@ -42,6 +44,18 @@ public class JavaClientGeneratorConfiguration extends TypedPropertyHolder {
 
     public void setTargetPackage(String targetPackage) {
         this.targetPackage = targetPackage;
+    }
+
+    public void setTargetSubMapperPackage(String targetSubMapperPackage) {
+        this.targetSubMapperPackage = targetSubMapperPackage;
+    }
+
+    public String getTargetSubMapperPackage() {
+        if (!stringHasValue(targetSubMapperPackage) && stringHasValue(targetPackage) &&
+        targetPackage.endsWith(BASE_MAPPER_PACKAGE_SUFFIX)) {
+            return targetPackage.substring(0, targetPackage.length() - BASE_MAPPER_PACKAGE_SUFFIX.length());
+        }
+        return targetSubMapperPackage;
     }
 
     public void validate(List<String> errors, String contextId) {

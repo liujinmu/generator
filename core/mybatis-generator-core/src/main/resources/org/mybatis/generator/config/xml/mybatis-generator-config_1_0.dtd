@@ -51,7 +51,7 @@
   tables.
 -->
 <!ELEMENT context (property*, plugin*, commentGenerator?, (connectionFactory | jdbcConnection), javaTypeResolver?,
-                         javaModelGenerator, sqlMapGenerator?, javaClientGenerator?, table+)>
+                         javaModelGenerator, sqlMapGenerator?, javaClientGenerator?, javaManagerGenerator?, table+)>
 <!ATTLIST context id ID #REQUIRED
   defaultModelType CDATA #IMPLIED
   targetRuntime CDATA #IMPLIED
@@ -144,6 +144,12 @@
   type CDATA #IMPLIED
   targetPackage CDATA #REQUIRED
   targetProject CDATA #REQUIRED>
+
+<!ELEMENT javaManagerGenerator (property*)>
+<!ATTLIST javaManagerGenerator
+        type CDATA #IMPLIED
+        targetPackage CDATA #REQUIRED
+        targetProject CDATA #REQUIRED>
 
 <!--
   The table element is used to specify a database table that will be the source information

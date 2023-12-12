@@ -60,6 +60,8 @@ public class Context extends PropertyHolder {
 
     private JavaClientGeneratorConfiguration javaClientGeneratorConfiguration;
 
+    private JavaManagerGeneratorConfiguration javaManagerGeneratorConfiguration;
+
     private final ArrayList<TableConfiguration> tableConfigurations;
 
     private final ModelType defaultModelType;
@@ -111,6 +113,10 @@ public class Context extends PropertyHolder {
 
     public JavaModelGeneratorConfiguration getJavaModelGeneratorConfiguration() {
         return javaModelGeneratorConfiguration;
+    }
+
+    public JavaManagerGeneratorConfiguration getJavaManagerGeneratorConfiguration() {
+        return javaManagerGeneratorConfiguration;
     }
 
     public JavaTypeResolverConfiguration getJavaTypeResolverConfiguration() {
@@ -206,6 +212,10 @@ public class Context extends PropertyHolder {
     public void setJavaModelGeneratorConfiguration(
             JavaModelGeneratorConfiguration javaModelGeneratorConfiguration) {
         this.javaModelGeneratorConfiguration = javaModelGeneratorConfiguration;
+    }
+
+    public void setJavaManagerGeneratorConfiguration(JavaManagerGeneratorConfiguration configuration) {
+        this.javaManagerGeneratorConfiguration = configuration;
     }
 
     public void setJavaTypeResolverConfiguration(

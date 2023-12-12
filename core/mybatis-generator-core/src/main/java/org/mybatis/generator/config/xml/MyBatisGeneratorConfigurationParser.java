@@ -39,6 +39,7 @@ import org.mybatis.generator.config.IgnoredColumnException;
 import org.mybatis.generator.config.IgnoredColumnPattern;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaManagerGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.JavaTypeResolverConfiguration;
 import org.mybatis.generator.config.ModelType;
@@ -191,6 +192,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseSqlMapGenerator(context, childNode);
             } else if ("javaClientGenerator".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseJavaClientGenerator(context, childNode);
+            } else if ("javaManagerGenerator".equals(childNode.getNodeName())){
+                parseJavaManagerGenerator(context, childNode);
             } else if ("table".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseTable(context, childNode);
             }
@@ -629,6 +632,34 @@ public class MyBatisGeneratorConfigurationParser {
 
             if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseProperty(javaClientGeneratorConfiguration, childNode);
+            }
+        }
+    }
+
+    private void parseJavaManagerGenerator(Context context, Node node) {
+        JavaManagerGeneratorConfiguration javaManagerGeneratorConfiguration = new JavaManagerGeneratorConfiguration();
+
+        context.setJavaManagerGeneratorConfiguration(javaManagerGeneratorConfiguration);
+
+        Properties attributes = parseAttributes(node);
+        String type = attributes.getProperty("type"); //$NON-NLS-1$
+        String targetPackage = attributes.getProperty("targetPackage"); //$NON-NLS-1$
+        String targetProject = attributes.getProperty("targetProject"); //$NON-NLS-1$
+
+        javaManagerGeneratorConfiguration.setConfigurationType(type);
+        javaManagerGeneratorConfiguration.setTargetPackage(targetPackage);
+        javaManagerGeneratorConfiguration.setTargetProject(targetProject);
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node childNode = nodeList.item(i);
+
+            if (childNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+
+            if ("property".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseProperty(javaManagerGeneratorConfiguration, childNode);
             }
         }
     }

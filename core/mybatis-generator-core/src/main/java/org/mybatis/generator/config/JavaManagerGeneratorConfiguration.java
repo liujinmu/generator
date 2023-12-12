@@ -13,18 +13,29 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.mybatis.generator.plugins;
+package org.mybatis.generator.config;
 
-import org.mybatis.generator.api.IntrospectedTable;
+public class JavaManagerGeneratorConfiguration extends TypedPropertyHolder {
+    private String targetPackage;
+    private String targetProject;
 
-public class RenameExampleClassPlugin extends RenameAbstractPlugin {
-    @Override
-    protected String getOldName(IntrospectedTable introspectedTable) {
-        return introspectedTable.getExampleType();
+    public JavaManagerGeneratorConfiguration() {
+        super();
     }
 
-    @Override
-    protected void setNewName(IntrospectedTable introspectedTable, String name) {
-        introspectedTable.setExampleType(name);
+    public String getTargetProject() {
+        return targetProject;
+    }
+
+    public void setTargetProject(String targetProject) {
+        this.targetProject = targetProject;
+    }
+
+    public String getTargetPackage() {
+        return targetPackage;
+    }
+
+    public void setTargetPackage(String targetPackage) {
+        this.targetPackage = targetPackage;
     }
 }

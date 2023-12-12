@@ -79,6 +79,7 @@ public class TableConfiguration extends PropertyHolder {
     private boolean isAllColumnDelimitingEnabled;
 
     private String mapperName;
+    private String managerName;
     private String sqlProviderName;
 
     private final List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
@@ -94,11 +95,11 @@ public class TableConfiguration extends PropertyHolder {
         insertStatementEnabled = true;
         selectByPrimaryKeyStatementEnabled = true;
         selectByExampleStatementEnabled = true;
-        updateByPrimaryKeyStatementEnabled = true;
-        deleteByPrimaryKeyStatementEnabled = true;
-        deleteByExampleStatementEnabled = true;
+        updateByPrimaryKeyStatementEnabled = false;
+        deleteByPrimaryKeyStatementEnabled = false;
+        deleteByExampleStatementEnabled = false;
         countByExampleStatementEnabled = true;
-        updateByExampleStatementEnabled = true;
+        updateByExampleStatementEnabled = false;
     }
 
     public boolean isDeleteByPrimaryKeyStatementEnabled() {
@@ -451,6 +452,10 @@ public class TableConfiguration extends PropertyHolder {
 
     public String getMapperName() {
         return mapperName;
+    }
+
+    public String getManagerName() {
+        return managerName;
     }
 
     public void setMapperName(String mapperName) {

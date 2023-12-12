@@ -17,14 +17,20 @@ package org.mybatis.generator.plugins;
 
 import org.mybatis.generator.api.IntrospectedTable;
 
-public class RenameExampleClassPlugin extends RenameAbstractPlugin {
+public class RenameJavaMapperPlugin extends RenameAbstractPlugin {
+    private final static String BASE_MAPPER_SUFFIX = "BaseMapper";
+
     @Override
     protected String getOldName(IntrospectedTable introspectedTable) {
-        return introspectedTable.getExampleType();
+        return introspectedTable.getMyBatis3JavaMapperType();
     }
 
     @Override
     protected void setNewName(IntrospectedTable introspectedTable, String name) {
-        introspectedTable.setExampleType(name);
+        introspectedTable.setMyBatis3JavaMapperType(name);
+        if (name.endsWith(BASE_MAPPER_SUFFIX)) {
+            String subMapperType = name.replace(BASE_MAPPER_SUFFIX, "Mapper").replace(".base.", ".");
+            introspectedTable.setMyBatis3JavaSubMapperType(subMapperType);
+        }
     }
 }

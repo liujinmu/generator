@@ -33,6 +33,7 @@ import java.util.stream.Stream;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
+import org.mybatis.generator.config.JavaManagerGeneratorConfiguration;
 import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
 import org.mybatis.generator.config.ModelType;
 import org.mybatis.generator.config.PropertyHolder;
@@ -67,6 +68,8 @@ public abstract class IntrospectedTable {
         ATTR_MYBATIS3_XML_MAPPER_FILE_NAME,
         /** also used as XML Mapper namespace if a Java mapper is generated. */
         ATTR_MYBATIS3_JAVA_MAPPER_TYPE,
+        ATTR_MYBATIS3_JAVA_SUB_MAPPER_TYPE,
+        ATTR_MYBATIS3_JAVA_MANAGER_TYPE,
         /** used as XML Mapper namespace if no client is generated. */
         ATTR_MYBATIS3_FALLBACK_SQL_MAP_NAMESPACE,
         ATTR_FULLY_QUALIFIED_TABLE_NAME_AT_RUNTIME,
@@ -669,6 +672,17 @@ public abstract class IntrospectedTable {
                 + fullyQualifiedTable.getSubPackageForClientOrSqlMap(isSubPackagesEnabled(config));
     }
 
+    protected String calculateJavaManagerClassPackage() {
+        JavaManagerGeneratorConfiguration config = context
+                .getJavaManagerGeneratorConfiguration();
+        if (config == null) {
+            return null;
+        }
+
+        return config.getTargetPackage()
+                + fullyQualifiedTable.getSubPackageForManager(isSubPackagesEnabled(config));
+    }
+
     protected String calculateDynamicSqlSupportPackage() {
         JavaClientGeneratorConfiguration config = context
                 .getJavaClientGeneratorConfiguration();
@@ -703,6 +717,17 @@ public abstract class IntrospectedTable {
             sb.append("Mapper"); //$NON-NLS-1$
         }
         setMyBatis3JavaMapperType(sb.toString());
+
+        sb.setLength(0);
+        sb.append(calculateJavaManagerClassPackage());
+        sb.append('.');
+        if (stringHasValue(tableConfiguration.getManagerName())) {
+            sb.append(tableConfiguration.getManagerName());
+        } else {
+            sb.append(fullyQualifiedTable.getDomainObjectName());
+            sb.append("Manager"); //$NON-NLS-1$
+        }
+        setMyBatis3JavaManagerType(sb.toString());
 
         sb.setLength(0);
         sb.append(calculateJavaClientInterfacePackage());
@@ -1015,6 +1040,28 @@ public abstract class IntrospectedTable {
         internalAttributes.put(
                 InternalAttribute.ATTR_MYBATIS3_JAVA_MAPPER_TYPE,
                 mybatis3JavaMapperType);
+    }
+
+    public String getMyBatis3JavaSubMapperType() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_MYBATIS3_JAVA_SUB_MAPPER_TYPE);
+    }
+
+    public void setMyBatis3JavaSubMapperType(String mybatis3JavaSubMapperType) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_MYBATIS3_JAVA_SUB_MAPPER_TYPE,
+                mybatis3JavaSubMapperType);
+    }
+
+    public String getMyBatis3JavaManagerType() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_MYBATIS3_JAVA_MANAGER_TYPE);
+    }
+
+    public void setMyBatis3JavaManagerType(String mybatis3JavaManagerType) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_MYBATIS3_JAVA_MANAGER_TYPE,
+                mybatis3JavaManagerType);
     }
 
     public String getMyBatis3SqlProviderType() {

@@ -17,14 +17,14 @@ package org.mybatis.generator.plugins;
 
 import org.mybatis.generator.api.IntrospectedTable;
 
-public class RenameExampleClassPlugin extends RenameAbstractPlugin {
+public class RenameJavaManagerPlugin extends RenameAbstractPlugin {
     @Override
     protected String getOldName(IntrospectedTable introspectedTable) {
-        return introspectedTable.getExampleType();
+        return introspectedTable.getMyBatis3JavaManagerType();
     }
 
     @Override
     protected void setNewName(IntrospectedTable introspectedTable, String name) {
-        introspectedTable.setExampleType(name);
+        introspectedTable.setMyBatis3JavaManagerType(name);
     }
 }
